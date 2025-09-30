@@ -101,3 +101,28 @@ func TestZeroLenInComputeAvg(t *testing.T) {
 		t.Errorf("Dividing by 0 should return 0 to avoid error, got %d", result)
 	}
 }
+
+func TestPassedClassPass(t *testing.T) {
+	gradeCalculator := NewGradeCalculator()
+
+	gradeCalculator.AddGrade("assignment", 100, Assignment)
+	gradeCalculator.AddGrade("exam", 100, Exam)
+	gradeCalculator.AddGrade("essay", 100, Essay)
+
+	if !gradeCalculator.passed {
+		t.Errorf("Expected passed to be true, got false")
+	}
+}
+
+func TestPassedClassFail(t *testing.T) {
+	gradeCalculator := NewGradeCalculator()
+
+	gradeCalculator.AddGrade("assignment", 0, Assignment)
+	gradeCalculator.AddGrade("exam", 40, Exam)
+	gradeCalculator.AddGrade("essay", 20, Essay)
+
+	if gradeCalculator.passed {
+		t.Errorf("Expected passed to be false, got true")
+	}
+}
+
